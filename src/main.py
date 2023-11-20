@@ -117,8 +117,8 @@ def global_stats(candidates: list[str], dictionary: list[str]) -> dict[str, int]
     # stats = {}
     play_game_p = partial(play_game, candidates, dictionary, verbose=False)
     with multiprocessing.Pool(8) as pool:
-        scores = pool.imap(play_game_p, candidates)
-        stats = dict(zip(candidates, list(tqdm(scores, total=len(candidates)))))
+        scores = list(tqdm(pool.imap(play_game_p, candidates), total=len(candidates)))
+        stats = dict(zip(candidates, scores))
     return stats
 
 
